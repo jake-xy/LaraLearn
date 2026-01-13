@@ -43,6 +43,22 @@ class AdminController extends Controller
         return view('admin.courses', compact('courses'));
     }
 
+
+    public function createCourse() {
+        $teachers = User::all()->where('role', '=', 'teacher');
+
+        return view('admin.create-course', compact('teachers'));
+    }
+
+
+    public function editCourse(Course $course) {
+        $teachers = User::all()->where('role', '=', 'teacher');
+        $selectedTeacherId = $course->teacher_id;
+
+        return view('admin.create-course', compact('course', 'teachers', 'selectedTeacherId'));
+    }
+
+
     // Store new student
     public function storeStudent(Request $request)
     {
@@ -75,16 +91,41 @@ class AdminController extends Controller
     public function storeCourse(Request $request)
     {
         $validated = $request->validate([
-            'course_code' => 'required|unique:courses',
-            'course_name' => 'required',
+            'title' => 'required',
             'description' => 'nullable',
-            'teacher_id' => 'required|exists:users,id',
-            'credits' => 'required|integer|min:1'
+            'credits' => 'required|integer|min:1',
+            'teacher_id' => 'required|exists:users,id'
         ]);
 
-        Course::create($validated);
+        Course::create([
+            'course_code' => strtoupper(substr(md5(uniqid()), 0, 6)),
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'teacher_id' => $validated['teacher_id'],
+            'credits' => $validated['credits'] ?? 0,
+            'status' => 'active',
+        ]);
 
         return redirect()->route('admin.courses')->with('success', 'Course created successfully');
+    }
+
+    // update new course
+    public function updateCourse(Request $request, Course $course) {
+        $validated = $request->validate([
+            'title' => 'required',
+            'description' => 'nullable',
+            'course_code' => "required|unique:courses,course_code,{$course->id}|min:6|max:6",
+            'credits' => 'required|integer|min:1',
+            'teacher_id' => 'required|exists:users,id'
+        ]);
+
+        $course->title = $validated['title'];
+        $course->description = $validated['description'];
+        $course->course_code = $validated['course_code'];
+        $course->teacher_id = $validated['teacher_id'];
+        $course->save();
+
+        return redirect()->route('admin.courses')->with('success', 'Course updated successfully');
     }
 
     // Delete course

@@ -25,11 +25,11 @@
 <header class="page-header">
     <div>
         <h1>My Courses</h1>
-        <p>Create and manage your courses</p>
+        <p>View and select courses assigned to you</p>
     </div>
-    <a href="{{ route('teacher.courses.create') }}" class="btn btn-primary">
+    {{-- <a href="{{ route('teacher.courses.create') }}" class="btn btn-primary">
         + Create Course
-    </a>
+    </a> --}}
 
 </header>
 
@@ -41,9 +41,10 @@
 @if($courses->isEmpty())
     <div class="content-section">
         <h2>No courses created yet</h2>
-        <p style="opacity:.85;">Create your first course to start uploading lessons and accepting students.</p>
-
-        <div style="margin-top:1.25rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <p style="opacity:.85;">Contact your admin to request for course assignment and start uploading lessons teaching accepting students.</p>
+        {{-- <p style="opacity:.85;">Create your first course to start uploading lessons and accepting students.</p> --}}
+        
+        {{-- <div style="margin-top:1.25rem; display:flex; gap:1rem; flex-wrap:wrap;">
             <div style="flex:1; min-width:320px; border:1px solid #eee; border-radius:14px; padding:1.25rem;">
                 <h3 style="margin:0 0 .5rem 0;">Create a Course</h3>
 
@@ -90,7 +91,7 @@
             <p style="opacity:.8; margin-top:1rem;">
                 After creating a course, you can upload lessons and manage students.
             </p>
-        </div>
+        </div> --}}
     </div>
 
 {{-- HAS COURSES --}}
@@ -137,12 +138,12 @@
                                 View
                             </a>
 
-                            <a href="{{ route('teacher.courses.edit', $course->id) }}"
+                            {{-- <a href="{{ route('teacher.courses.edit', $course->id) }}"
                             class="btn">
                                 Edit
-                            </a>
+                            </a> --}}
 
-                            <form method="POST"
+                            {{-- <form method="POST"
                                 action="{{ route('teacher.courses.destroy', $course->id) }}"
                                 onsubmit="return confirm('Delete this course? This cannot be undone.');">
                                 @csrf
@@ -153,7 +154,7 @@
                                         style="border:1px solid #f2b8b5; color:#b00020;">
                                     Delete
                                 </button>
-                            </form>
+                            </form> --}}
                         </div>
                     </div>
                 </a>

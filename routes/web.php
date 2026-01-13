@@ -29,8 +29,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/students', [AdminController::class, 'storeStudent'])->name('students.store');
         Route::delete('/students/{id}', [AdminController::class, 'deleteStudent'])->name('students.delete');
 
+        Route::get('/teachers', [AdminController::class, 'teachers'])->name('teachers');
+        Route::post('/teachers', [AdminController::class, 'teachers'])->name('teachers.store');
+        Route::delete('/teachers/{id}', [AdminController::class, 'teachers'])->name('teachers.delete');
+
         Route::get('/courses', [AdminController::class, 'courses'])->name('courses');
+        Route::get('/courses/create', [AdminController::class, 'createCourse'])->name('courses.create');
         Route::post('/courses', [AdminController::class, 'storeCourse'])->name('courses.store');
+        Route::get('/courses/edit/{course}', [AdminController::class, 'editCourse'])->name('courses.edit');
+        Route::put('/courses/edit/{course}', [AdminController::class, 'updateCourse'])->name('courses.update');
         Route::delete('/courses/{id}', [AdminController::class, 'deleteCourse'])->name('courses.delete');
     });
 

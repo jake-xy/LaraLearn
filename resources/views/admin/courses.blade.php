@@ -15,14 +15,13 @@
         <p>Create and manage course offerings</p>
     </div>
     <div class="header-actions">
-        <button class="btn btn-primary" onclick="openAddCourseModal()">+ Add Course</button>
+        <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">+ Add Course</a>
+        {{-- <button class="btn btn-primary" onclick="openAddCourseModal()">+ Add Course</button> --}}
     </div>
 </header>
 
 @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+    <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
 <!-- Courses Grid -->
@@ -34,10 +33,15 @@
                 <p class="course-code">{{ $course->code }}</p>
             </div>
             <p class="course-description">{{ $course->description }}</p>
+            @if(!empty($course->course_code))
+                            <div style="margin-top:.9rem; font-size:.9rem; opacity:.85;">
+                                Join Code: <strong>{{ $course->course_code }}</strong>
+                            </div>
+                        @endif
             <div class="course-footer">
                 <span>Teacher: {{ $course->teacher->name ?? 'Not assigned' }}</span>
                 <div>
-                    <button onclick="editCourse({{ $course->id }})" class="btn btn-secondary">Edit</button>
+                    <a href="{{ route('admin.courses.edit', $course) }}" class="btn btn-secondary">Edit</a>
                     <form action="{{ route('admin.courses.delete', $course->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
@@ -49,44 +53,6 @@
     @empty
         <p>No courses available</p>
     @endforelse
-</div>
-
-<!-- Add Course Modal -->
-<div id="addCourseModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Add New Course</h2>
-            <button class="modal-close" onclick="closeAddCourseModal()">&times;</button>
-        </div>
-        <form id="addCourseForm" action="{{ route('admin.courses.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="courseTitle">Course Title</label>
-                <input type="text" id="courseTitle" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="courseCode">Course Code</label>
-                <input type="text" id="courseCode" name="code" required>
-            </div>
-            <div class="form-group">
-                <label for="courseDescription">Description</label>
-                <textarea id="courseDescription" name="description" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="courseTeacher">Assign Teacher</label>
-                <select id="courseTeacher" name="teacher_id" required>
-                    <option value="">Select a teacher</option>
-                    @foreach($teachers ?? [] as $teacher)
-                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeAddCourseModal()">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create Course</button>
-            </div>
-        </form>
-    </div>
 </div>
 @endsection
 
