@@ -5,30 +5,7 @@
 @section('portal-name', 'Admin Panel')
 
 @section('navigation')
-<a href="{{ route('admin.dashboard') }}" class="nav-item active">
-    <span class="icon">📊</span>
-    Dashboard
-</a>
-<a href="{{ route('admin.students.index') }}" class="nav-item">
-    <span class="icon">👥</span>
-    Students
-</a>
-<a href="{{ route('admin.teachers.index') }}" class="nav-item">
-    <span class="icon">👨‍🏫</span>
-    Teachers
-</a>
-<a href="{{ route('admin.courses.index') }}" class="nav-item">
-    <span class="icon">📚</span>
-    Courses
-</a>
-<a href="{{ route('admin.enrollments.index') }}" class="nav-item">
-    <span class="icon">📝</span>
-    Enrollments
-</a>
-<a href="{{ route('admin.reports') }}" class="nav-item">
-    <span class="icon">📈</span>
-    Reports
-</a>
+    <x-admin-navbar selectedItem='dashboard'></x-admin-navbar>
 @endsection
 
 @section('content')

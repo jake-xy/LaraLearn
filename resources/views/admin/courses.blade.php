@@ -5,30 +5,7 @@
 @section('portal-name', 'Admin Panel')
 
 @section('navigation')
-<a href="{{ route('admin.dashboard') }}" class="nav-item">
-    <span class="icon">📊</span>
-    Dashboard
-</a>
-<a href="{{ route('admin.students.index') }}" class="nav-item">
-    <span class="icon">👥</span>
-    Students
-</a>
-<a href="{{ route('admin.teachers.index') }}" class="nav-item">
-    <span class="icon">👨‍🏫</span>
-    Teachers
-</a>
-<a href="{{ route('admin.courses.index') }}" class="nav-item active">
-    <span class="icon">📚</span>
-    Courses
-</a>
-<a href="{{ route('admin.enrollments.index') }}" class="nav-item">
-    <span class="icon">📝</span>
-    Enrollments
-</a>
-<a href="{{ route('admin.reports') }}" class="nav-item">
-    <span class="icon">📈</span>
-    Reports
-</a>
+    <x-admin-navbar selectedItem='courses'></x-admin-navbar>
 @endsection
 
 @section('content')
@@ -61,7 +38,7 @@
                 <span>Teacher: {{ $course->teacher->name ?? 'Not assigned' }}</span>
                 <div>
                     <button onclick="editCourse({{ $course->id }})" class="btn btn-secondary">Edit</button>
-                    <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST" style="display: inline;">
+                    <form action="{{ route('admin.courses.delete', $course->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-secondary" onclick="return confirm('Are you sure?')">Delete</button>

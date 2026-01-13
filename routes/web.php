@@ -24,9 +24,11 @@ Route::middleware(['auth'])->group(function () {
     // Admin routes
     Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        
         Route::get('/students', [AdminController::class, 'students'])->name('students');
         Route::post('/students', [AdminController::class, 'storeStudent'])->name('students.store');
         Route::delete('/students/{id}', [AdminController::class, 'deleteStudent'])->name('students.delete');
+
         Route::get('/courses', [AdminController::class, 'courses'])->name('courses');
         Route::post('/courses', [AdminController::class, 'storeCourse'])->name('courses.store');
         Route::delete('/courses/{id}', [AdminController::class, 'deleteCourse'])->name('courses.delete');
