@@ -38,7 +38,7 @@
 @if($courses->isEmpty())
     <div class="content-section">
         <h2>No courses yet</h2>
-        <p style="opacity:.85;">Create a course first so you can upload lessons and materials.</p>
+        <p style="opacity:.85;">Request for a course first so you can upload lessons and materials.</p>
         <div style="margin-top:1rem;">
             <a class="btn btn-primary" href="{{ route('teacher.courses') }}">Go to My Courses</a>
         </div>

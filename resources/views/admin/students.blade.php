@@ -14,9 +14,9 @@
         <h1>Manage Students</h1>
         <p>View and manage student accounts</p>
     </div>
-    <div class="header-actions">
+    {{-- <div class="header-actions">
         <button class="btn btn-primary" onclick="openAddStudentModal()">+ Add Student</button>
-    </div>
+    </div> --}}
 </header>
 
 @if (session('success'))
@@ -26,14 +26,15 @@
 @endif
 
 <!-- Search and Filter -->
-<div class="table-controls">
-    <input type="text" id="searchStudent" placeholder="Search students..." class="search-input">
-    <select id="filterStatus" class="filter-select">
-        <option value="">All Status</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-    </select>
-</div>
+<form action="{{ route('admin.students') }}" method="GET">
+    <div class="table-controls">
+        <input type="text" value="{{ request('search') }}" name='search' id="searchStudent" placeholder="Search students..." class="search-input">
+        <button type="submit" class="btn btn-primary">Search</button>
+        @if(request('search'))
+            <a href="{{ route('admin.students') }}" class="btn btn-secondary">Clear</a>
+        @endif
+    </div>
+</form>
 
 <!-- Students Table -->
 <div class="table-container">
@@ -61,11 +62,11 @@
                         </span>
                     </td>
                     <td>
-                        <button onclick="editStudent({{ $student->id }})" class="btn btn-secondary">Edit</button>
+                        <a href="{{ route('admin.students.edit', $student) }}" class="btn btn-secondary">Edit</a>
                         <form action="{{ route('admin.students.delete', $student->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-secondary" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('Are you sure? This action cannot be undone')">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -111,5 +112,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/admin-students.js') }}"></script>
+    <script src="{{ asset('js/admin-students.js') }}"></script>
 @endpush

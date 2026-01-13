@@ -8,6 +8,8 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Hash;
 
+use function Illuminate\Support\now;
+
 class AdminController extends Controller
 {
     // Show admin dashboard
@@ -22,12 +24,20 @@ class AdminController extends Controller
     }
 
     // Show all students
-    public function students()
+    public function students(Request $request)
     {
-        $students = User::where('role', 'student')
-            ->withCount('enrollments')
-            ->latest()
-            ->get();
+        $query = User::where('role', 'student');
+
+        if ($request->has('search') && $request->filled('search')) {
+            $searchTerm = $request->get('search');
+            
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('email', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        $students = $query->get();
 
         return view('admin.students', compact('students'));
     }
@@ -47,7 +57,7 @@ class AdminController extends Controller
     public function createCourse() {
         $teachers = User::all()->where('role', '=', 'teacher');
 
-        return view('admin.create-course', compact('teachers'));
+        return view('admin.courses-edit-create', compact('teachers'));
     }
 
 
@@ -55,7 +65,7 @@ class AdminController extends Controller
         $teachers = User::all()->where('role', '=', 'teacher');
         $selectedTeacherId = $course->teacher_id;
 
-        return view('admin.create-course', compact('course', 'teachers', 'selectedTeacherId'));
+        return view('admin.courses-edit-create', compact('course', 'teachers', 'selectedTeacherId'));
     }
 
 
@@ -85,6 +95,48 @@ class AdminController extends Controller
         $student->delete();
 
         return redirect()->route('admin.students')->with('success', 'Student deleted successfully');
+    }
+
+    // edit student
+    public function editStudent(User $student) {
+        $courses = Course::all();
+
+        return view('admin.students-edit', compact('student', 'courses'));
+    }
+
+    public function updateStudent(Request $request, User $student) {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email'
+        ]);
+
+        $student->name = $validated['name'];
+        $student->email = $validated['email'];
+        $student->save();
+
+        return redirect()->route('admin.students.edit', $student)->with('success update', 'Updated student info successfully');
+    }
+
+    public function addStudentCourse(Request $request, User $student) {
+        $enrollment = Enrollment::create([
+            'student_id' => $student->id,
+            'course_id' => $request['addedItemId'],
+            'enrollment_date' => now(),
+            'status' => 'active'
+        ]
+        );
+
+        return redirect()->route('admin.students.edit', $student)->with('success', 'Course added to student successfully');
+    }
+
+    public function deleteStudentCourse(User $student, Course $course) {
+        $enrollment = Enrollment::where('student_id', $student->id)
+                                    ->where('course_id', $course->id)
+                                    ->firstOrFail();
+
+        $enrollment->delete();
+
+        return redirect()->route('admin.students.edit', $student)->with('success', 'Course removed from student successfully');
     }
 
     // Store new course
@@ -135,5 +187,25 @@ class AdminController extends Controller
         $course->delete();
 
         return redirect()->route('admin.courses')->with('success', 'Course deleted successfully');
+    }
+
+
+    // teachers endpoint
+    public function teachers(Request $request) {
+        $query = User::where('role', 'teacher');
+
+        if ($request->has('search') && $request->filled('search')) {
+            $searchTerm = $request->get('search');
+            
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('email', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        $teachers = $query->get();
+
+
+        return view('admin.teachers', compact('teachers'));
     }
 }

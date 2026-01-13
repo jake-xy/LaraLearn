@@ -8,10 +8,10 @@
     <span class="icon">👥</span>
     Students
 </a>
-{{-- <a href="{{ route('admin.teachers') }}" class="nav-item {{ $selectedItem == 'teachers' ? 'active' : ''}}">
+<a href="{{ route('admin.teachers') }}" class="nav-item {{ $selectedItem == 'teachers' ? 'active' : ''}}">
     <span class="icon">👨‍🏫</span>
     Teachers
-</a> --}}
+</a>
 <a href="{{ route('admin.courses') }}" class="nav-item {{ $selectedItem == 'courses' ? 'active' : ''}}">
     <span class="icon">📚</span>
     Courses

@@ -28,6 +28,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/students', [AdminController::class, 'students'])->name('students');
         Route::post('/students', [AdminController::class, 'storeStudent'])->name('students.store');
         Route::delete('/students/{id}', [AdminController::class, 'deleteStudent'])->name('students.delete');
+        Route::get('students/edit/{student}', [AdminController::class, 'editStudent'])->name('students.edit');
+        Route::put('students/edit/{student}', [AdminController::class, 'updateStudent'])->name('students.update');
+        Route::post('students/edit/{student}', [AdminController::class, 'addStudentCourse'])->name('students.edit.add-course');
+        Route::delete('students/edit/{student}/course/{course}', [AdminController::class, 'deleteStudentCourse'])->name('students.edit.delete-course');
 
         Route::get('/teachers', [AdminController::class, 'teachers'])->name('teachers');
         Route::post('/teachers', [AdminController::class, 'teachers'])->name('teachers.store');

@@ -40,7 +40,7 @@
 {{-- EMPTY STATE: No courses created --}}
 @if($courses->isEmpty())
     <div class="content-section">
-        <h2>No courses created yet</h2>
+        <h2>No courses assigned yet</h2>
         <p style="opacity:.85;">Contact your admin to request for course assignment and start uploading lessons teaching accepting students.</p>
         {{-- <p style="opacity:.85;">Create your first course to start uploading lessons and accepting students.</p> --}}
         
