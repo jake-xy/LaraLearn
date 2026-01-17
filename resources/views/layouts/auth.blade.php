@@ -10,6 +10,10 @@
 <body class="auth-page">
     <div class="auth-container">
         <div class="auth-card">
+            <!--logo -->
+                <img src="{{ asset('images/logo.png') }}" 
+                alt="System Logo"
+                class="auth-logo">
             @yield('content')
         </div>
     </div>

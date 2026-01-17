@@ -62,8 +62,15 @@ body {
 }
 
 .sidebar-header {
+  text-align: center;
   padding: var(--spacing-lg);
   border-bottom: 1px solid var(--color-border);
+}
+
+.portal-logo{
+  background-color: white;
+  width: 130px;
+  margin-bottom: 6px;
 }
 
 .sidebar-header h2 {
@@ -349,6 +356,14 @@ body {
 .auth-header {
   text-align: center;
   margin-bottom: var(--spacing-xl);
+}
+
+.auth-logo{
+  display: block;
+  margin: 0 auto 12px auto;
+  background-color: white;
+  width: 130px;
+  margin-bottom: 6px;
 }
 
 .auth-header h1 {

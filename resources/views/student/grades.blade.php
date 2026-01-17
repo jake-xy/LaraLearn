@@ -114,6 +114,7 @@
                             <th>Assignment</th>
                             <th>Course</th>
                             <th>Score</th>
+                            <th>Feedback</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -141,6 +142,19 @@
                                     <span style="opacity:.8; margin-left:.5rem;">
                                         ({{ $earned }}/{{ $max }})
                                     </span>
+                                </td>
+
+                                {{-- FEEDBACK COLUMN --}}
+                                 <td>
+                                     @if($grade->feedback)
+                                        <div class="feedback-box">
+                                            {{ $grade->feedback }}
+                                        </div>
+                                     @else
+                                        <span class="text-muted">
+                                            No feedback yet
+                                        </span>
+                                    @endif
                                 </td>
                                 <td>{{ $date }}</td>
                             </tr>

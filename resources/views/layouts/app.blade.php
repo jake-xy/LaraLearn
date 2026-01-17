@@ -10,9 +10,15 @@
 </head>
 <body>
     <div class="layout">
+        
+
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
+                <!--logo -->
+                <img src="{{ asset('images/logo.png') }}" 
+                alt="System Logo"
+                class="portal-logo">
                 <h2>@yield('portal-name')</h2>
             </div>
             <nav class="sidebar-nav">
