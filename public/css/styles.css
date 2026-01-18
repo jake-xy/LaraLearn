@@ -678,6 +678,11 @@ body {
     cursor: text;
 }
 
+.auth-error {
+    color: #dc3545;
+    font-weight: 600;
+}
+
 .alert-success {
   color: green;
 }

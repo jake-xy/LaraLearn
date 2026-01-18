@@ -9,10 +9,8 @@
 </div>
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
+    <div class="auth-error">
+        {{ $errors->first() }}
     </div>
 @endif
 
@@ -27,9 +25,6 @@
     <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Enter your email">
-        @error('email')
-            <span class="error-text">{{ $message }}</span>
-        @enderror
     </div>
     
     <div class="form-group">

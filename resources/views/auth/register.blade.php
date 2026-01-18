@@ -8,13 +8,12 @@
     <p>Register for E-Learning System</p>
 </div>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
+@if ($errors->has('email'))
+    <div class="auth-error">
+        Account already exists!
     </div>
 @endif
+
 
 <form id="registerForm" action="{{ route('register') }}" method="POST" class="auth-form">
     @csrf
@@ -29,9 +28,6 @@
     <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Enter your email">
-        @error('email')
-            <span class="error-text">{{ $message }}</span>
-        @enderror
     </div>
     
     <div class="form-group">
@@ -50,7 +46,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required placeholder="Create a password">
         @error('password')
-            <span class="error-text">{{ $message }}</span>
+            <span class="auth-error">{{ $message }}</span>
         @enderror
     </div>
     
