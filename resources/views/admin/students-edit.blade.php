@@ -68,7 +68,7 @@
                         @method('DELETE')
                         <div style="width:100%; padding:.7rem .9rem; border:1px solid #ddd; border-radius:10px; margin-bottom:0.5rem; display: flex; justify-content: space-between;">
                             <div>{{$course->title}} | {{$course->credits}}</div>
-                            <button type="submit" style="margin-left:0.5rem; background:none; border:none; padding: none; cursor: pointer;">⛔</button>
+                            <button type="submit" style="margin-left:0.5rem; background:none; border:none; padding: none; cursor: pointer;" onclick="return confirm('Are you sure? This action is irreversible')">⛔</button>
                         </div>
                     </form>
                 @endforeach

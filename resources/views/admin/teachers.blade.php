@@ -39,7 +39,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Enrolled Courses</th>
+                    <th>Assigned Courses</th>
                     <th>Actions</th>
                 </tr>
             </thead>
