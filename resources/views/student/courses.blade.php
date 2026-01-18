@@ -46,11 +46,12 @@
 @if(!$hasEnrolled)
     <div class="content-section">
         <h2>You're not enrolled in any course yet</h2>
-        <p style="opacity: 0.85;">Join a course to start learning.</p>
+        <p style="opacity: 0.85;">Contact your admin to join a course and start learning.</p>
+        {{-- <p style="opacity: 0.85;">Join a course to start learning.</p> --}}
 
         <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
             {{-- Join via Code --}}
-            <div style="flex: 1; min-width: 320px; border:1px solid #eee; border-radius:12px; padding:1.25rem;">
+            {{-- <div style="flex: 1; min-width: 320px; border:1px solid #eee; border-radius:12px; padding:1.25rem;">
                 <h3 style="margin:0 0 .5rem 0;">Join with Course Code</h3>
                 <p style="opacity:.8; margin:0 0 1rem 0;">Enter the code given by your teacher.</p>
 
@@ -76,10 +77,10 @@
                         </div>
                     @enderror
                 </form>
-            </div>
+            </div> --}}
 
             {{-- Browse available courses (optional) --}}
-            <div style="flex: 1; min-width: 320px; border:1px solid #eee; border-radius:12px; padding:1.25rem;">
+            {{-- <div style="flex: 1; min-width: 320px; border:1px solid #eee; border-radius:12px; padding:1.25rem;">
                 <h3 style="margin:0 0 .5rem 0;">Browse Available Courses</h3>
                 <p style="opacity:.8; margin:0 0 1rem 0;">Choose a course and join instantly.</p>
 
@@ -110,7 +111,7 @@
                 @else
                     <p style="opacity:.8; margin:0;">No available courses listed yet.</p>
                 @endif
-            </div>
+            </div> --}}
         </div>
     </div>
 @else
@@ -180,7 +181,7 @@
     </div>
 
     {{-- Join/Add more courses even if enrolled --}}
-    <div class="content-section">
+    {{-- <div class="content-section">
         <h2>Join Another Course</h2>
 
         <form method="POST" action="{{ route('student.courses.join') }}" style="max-width:520px;">
@@ -204,6 +205,6 @@
                 </div>
             @enderror
         </form>
-    </div>
+    </div> --}}
 @endif
 @endsection
