@@ -39,7 +39,7 @@
 <div class="table-controls">
     <form action="{{ route('teacher.grading') }}" method="GET">
         <select name="course" id="filterCourse" class="filter-select" onchange="this.form.submit()">
-            <option value="">All Courses</option>
+            <option value="-1">All Courses</option>
             @foreach($courses ?? [] as $course)
                 <option value="{{ $course->id }}" {{ request('course') == $course->id ? 'selected' : '' }}>
                     {{ $course->title }}

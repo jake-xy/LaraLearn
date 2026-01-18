@@ -326,15 +326,28 @@ class TeacherController extends Controller
     }
 
     // Show grading dashboard
-    public function grading()
+    public function grading(Request $request)
     {
         $courses = Auth::user()->taughtCourses()->get();
-        $submissions = Submission::whereHas('assignment', function($query) use ($courses) {
-            $query->whereIn('course_id', $courses->pluck('id'));
+        $query = Submission::whereHas('assignment', function($q) use ($courses) {
+            $q->whereIn('course_id', $courses->pluck('id'));
         })
         ->with(['student', 'assignment.course', 'grade'])
-        ->latest()
-        ->get();
+        ->latest();
+        
+        // filter by courses
+        if ($request->filled('course') && $request->course !== '-1') {
+            $query->whereHas('assignment', function($q) use ($request) {
+                $q->where('course_id', $request->course);
+            });
+        }
+
+        // filter by status
+        if ($request->filled('status') && strtolower($request->status) !== 'all') {
+            $query->where('status', strtolower($request->status));
+        }
+        
+        $submissions = $query->get();
 
         return view('teacher.grading', compact('submissions', 'courses'));
     }
