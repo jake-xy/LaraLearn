@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\Models\CourseRequest;
+
 
 use function Illuminate\Support\now;
 
@@ -208,4 +211,26 @@ class AdminController extends Controller
 
         return view('admin.teachers', compact('teachers'));
     }
+
+    public function deleteTeacher($id)
+{
+    $teacher = User::where('id', $id)
+        ->where('role', 'teacher')
+        ->firstOrFail();
+
+    // Remove teacher-course relationships (pivot table)
+    DB::table('course_teacher')
+        ->where('teacher_id', $teacher->id)
+        ->delete();
+
+    // Remove course requests made by teacher
+    Course::where('teacher_id', $teacher->id)->delete();
+
+    // Finally delete the teacher
+    $teacher->delete();
+
+    return redirect()->route('admin.teachers')
+        ->with('success', 'Teacher deleted successfully.');
+}
+
 }
