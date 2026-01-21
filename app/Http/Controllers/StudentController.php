@@ -36,6 +36,11 @@ class StudentController extends Controller
             $q->whereNotNull('content_upload_id');
         })
         ->count();
+         // ✅ Average grade = total points earned / total max points * 100
+        $earned = Grade::where('student_id', $student->id)->sum('points_earned');
+        $max    = Grade::where('student_id', $student->id)->sum('max_points');
+
+        $averageGrade = $max > 0 ? round(($earned / $max) * 100) : null;
 
 
         // ✅ Pending 
@@ -63,7 +68,8 @@ class StudentController extends Controller
         return view('student.dashboard', compact(
             'enrolledCourses',
             'pendingAssignmentsCount',
-            'completedAssignments'
+            'completedAssignments',
+            'averageGrade'
         ));
     }
 
